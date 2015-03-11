@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:gravity="center|top">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/main_server"
+            android:hint="Server name"
+            android:layout_width="wrap_content"
+            android:layout_weight="9"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/main_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="port"/>
+        <Button
+            android:id="@+id/main_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="打开"/>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/main_device_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+    </ListView>
+   <!--EditText
+        android:id="@+id/main_message"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16px"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:focusable="false"/-->
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/main_send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Send"/>
+        <Button
+            android:id="@+id/main_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Clear"/>
+    </LinearLayout>
+
+</LinearLayout>
