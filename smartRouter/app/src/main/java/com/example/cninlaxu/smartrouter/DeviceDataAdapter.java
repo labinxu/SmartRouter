@@ -76,27 +76,45 @@ public class DeviceDataAdapter extends BaseAdapter {
             holder = (ItemHolder)convertView.getTag();
         }
         HashMap<String, String> mapitem = data.get(position);
+        String type = mapitem.get("type");
         holder.deviceDescribe.setText(mapitem.get("deviceDescribe"));
-        holder.deviceIdentity = mapitem.get("type") + mapitem.get("index");
+        holder.deviceIdentity =  type + mapitem.get("index");
         holder.deviceFunctions = mapitem.get("deviceStatus");
         holder.deviceParam1 = mapitem.get("deviceParam1");
         holder.deviceParam2 = mapitem.get("deviceParam2");
-        if ( holder.deviceFunctions == "On"){
-            holder.deviceStatus.setImageResource(R.drawable.light_on);
-        }
-        else if(holder.deviceFunctions == "Flash"){
-            holder.deviceStatus.setImageResource(R.drawable.light_flash);
+        Log.d("handleMsg", "type "+type);
+        if (type.equals("1")) {
+            if (holder.deviceFunctions == "On") {
+                holder.deviceStatus.setImageResource(R.drawable.light_on);
+            } else if (holder.deviceFunctions == "Flash") {
+                holder.deviceStatus.setImageResource(R.drawable.light_flash);
+            } else {
+                holder.deviceStatus.setImageResource(R.drawable.light_off);
+            }
+
+            holder.deviceStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) DeviceDataAdapter.this.context).itemButtonClicked(holder.deviceIdentity);
+                }
+            });
         }
         else {
-            holder.deviceStatus.setImageResource(R.drawable.light_off);
-        }
-
-        holder.deviceStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)DeviceDataAdapter.this.context).itemButtonClicked(holder.deviceIdentity);
+            //Fan
+            if (holder.deviceFunctions == "On") {
+                holder.deviceStatus.setImageResource(R.drawable.fan_run);
             }
-        });
+            else {
+                holder.deviceStatus.setImageResource(R.drawable.fan_off);
+            }
+
+            holder.deviceStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((MainActivity) DeviceDataAdapter.this.context).itemButtonClicked(holder.deviceIdentity);
+                }
+            });
+        }
         return convertView;
     }
 

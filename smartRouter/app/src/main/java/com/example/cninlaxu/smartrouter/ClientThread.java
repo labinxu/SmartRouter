@@ -45,6 +45,10 @@ public class ClientThread implements Runnable{
     {
         return isRunning;
     }
+    public void setStatus(boolean b)
+    {
+        isRunning = b;
+    }
     @Override
     public void run() {
         s = new Socket();
@@ -107,6 +111,7 @@ public class ClientThread implements Runnable{
 
                     } catch (IOException e) {
                         e.printStackTrace();
+                        return;
                     }
                 }
             }.start();
@@ -150,7 +155,7 @@ public class ClientThread implements Runnable{
 
         }catch (SocketTimeoutException e){
             Message msg = new Message();
-            msg.what=0x123;
+            msg.what=0x001;
             msg.obj="connect timeout";
             handler.sendMessage(msg);
         }

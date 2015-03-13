@@ -53,6 +53,23 @@ public class DeviceData {
         tmpdata[1] = deviceBinData[3];
         return String.valueOf(bin2oct(tmpdata));
     }
+    public byte[] switchStatus()
+    {
+        if (deviceBinData[8]== 0x01) {
+            return deviceOff();
+        }
+        return deviceOn();
+    }
+    public byte[] deviceOff()
+    {
+        deviceBinData[8] = 0x02;
+        return deviceBinData;
+    }
+    public byte[] deviceOn()
+    {
+        deviceBinData[8] = 0x01;
+        return deviceBinData;
+    }
     public String getDeviceType()
     {
         byte[] tmpdata= new byte[2];

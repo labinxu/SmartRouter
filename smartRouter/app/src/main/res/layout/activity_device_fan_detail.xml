@@ -8,7 +8,7 @@
     android:showDividers="middle"
     android:divider="?android:dividerVertical"
     android:dividerPadding="5dp"
-    tools:context="com.example.cninlaxu.smartrouter.DeviceDetail">
+    tools:context="com.example.cninlaxu.smartrouter.DeviceFan">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -25,33 +25,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:gravity="left|center"
-                android:id="@+id/device_item_name"
+                android:id="@+id/device_fan_item_name"
                 android:layout_weight="1"/>
             <Switch
-                android:id="@+id/device_item_switch"
+                android:id="@+id/device_fan_item_switch"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="left|center"
-                android:text="闪烁"
-                android:layout_weight="1"/>
-            <Switch
-                android:id="@+id/device_item_flash_switch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+
 
         <TextView
-            android:text="闪缩间隔(秒)"
+            android:text="档位"
             android:gravity="left|center"
             android:layout_width="fill_parent"
             android:layout_height="24dp"
@@ -69,18 +55,33 @@
             android:showDividers="middle"
             >
             <EditText
-                android:id="@+id/device_item_flash_interval_text"
+                android:id="@+id/device_fan_level_text"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="0"
+                android:text="1"
                 />
             <SeekBar
-                android:id="@+id/device_item_flash_interval_seekbar"
+                android:id="@+id/device_fan_level_seekbar"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:progress="0"
+                android:progress="1"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="left|center"
+                android:text="定时"
+                android:layout_weight="1"/>
+            <Switch
+                android:id="@+id/device_fan_timer_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
             android:layout_margin="5dp"
@@ -101,13 +102,13 @@
             android:background="#ccffff"
             >
             <EditText
-                android:id="@+id/device_item_flash_continuous_text"
+                android:id="@+id/device_fan_timer_text"
                 android:layout_width="60dp"
                 android:layout_height="fill_parent"
                 android:singleLine="true"
-                android:text="0"/>
+                android:text="1"/>
             <SeekBar
-                android:id="@+id/device_item_flash_continuous_seekbar"
+                android:id="@+id/device_fan_timer_seekbar"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:progress="1"/>
@@ -119,17 +120,17 @@
         android:gravity="center"
         android:layout_gravity="bottom">
         <Button
-            android:id="@+id/device_item_detail_ok"
+            android:id="@+id/device_fan_detail_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="确定"
             android:layout_weight="1"
             />
         <Button
-            android:id="@+id/device_item_detail_cancel"
+            android:id="@+id/device_fan_detail_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="取消"/>
-        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

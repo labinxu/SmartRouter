@@ -35,31 +35,15 @@ public class LEDLight extends DeviceData
     public byte[] switchStatus()
     {
         if (deviceBinData[8]== 0x01) {
-            return lightOff();
+            return deviceOff();
         }
         /*else if (deviceFunctions[3]==0x02)
         {
             return lightFlash();
         }*/
-        return lightOn();
-    }
-    private byte[] lightOn(){
-
-        if(deviceBinData==null){
-            return null;
-        }
-        deviceBinData[8] = 0x01;
-        return deviceBinData;
+        return deviceOn();
     }
 
-    private byte[] lightOff()
-    {
-        if(deviceBinData==null){
-            return null;
-        }
-        deviceBinData[8] = 0x02;
-        return deviceBinData;
-    }
     private byte[] lightFlash()
     {
         if(deviceBinData==null){
@@ -86,6 +70,7 @@ public class LEDLight extends DeviceData
         System.arraycopy(var,0, deviceBinData, 9, 4);
         return new String(deviceBinData);
     }
+
     public byte[] update(Bundle bundle)
     {
         String deviceFunctions = bundle.get("deviceFunctions").toString();
@@ -99,11 +84,11 @@ public class LEDLight extends DeviceData
         }
         else if (deviceFunctions.equals("On"))
         {
-            lightOn();
+            deviceOn();
         }
         else if (deviceFunctions.equals("Off"))
         {
-            lightOff();
+            deviceOff();
         }
         return getBinCode();
     }

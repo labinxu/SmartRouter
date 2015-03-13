@@ -36,15 +36,15 @@
         android:layout_height="0dp"
         android:layout_weight="3">
     </ListView>
-   <!--EditText
+   <EditText
         android:id="@+id/main_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="16px"
+        android:textSize="20px"
         android:scrollbars="vertical"
         android:singleLine="false"
-        android:focusable="false"/-->
-    <LinearLayout
+        android:focusable="false"/>
+    <!--LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <Button
@@ -59,6 +59,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Clear"/>
-    </LinearLayout>
+    </LinearLayout-->
 
 </LinearLayout>
