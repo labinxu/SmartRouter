@@ -14,6 +14,13 @@
 		CEB527951AAE7EEC00069E44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEB527941AAE7EEC00069E44 /* Images.xcassets */; };
 		CEB527981AAE7EEC00069E44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEB527961AAE7EEC00069E44 /* LaunchScreen.xib */; };
 		CEB527A41AAE7EED00069E44 /* SmartRouterIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB527A31AAE7EED00069E44 /* SmartRouterIOSTests.m */; };
+		F04BF85D1AB6A49E00D089AD /* DeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F04BF85C1AB6A49E00D089AD /* DeviceTableViewCell.m */; };
+		F04BF8611AB6A88200D089AD /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04BF8601AB6A88200D089AD /* DeviceCell.xib */; };
+		F04BF9C41AB6B21400D089AD /* light_flash.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C11AB6B21400D089AD /* light_flash.png */; };
+		F04BF9C51AB6B21400D089AD /* light_off.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C21AB6B21400D089AD /* light_off.png */; };
+		F04BF9C61AB6B21400D089AD /* light_on.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C31AB6B21400D089AD /* light_on.png */; };
+		F04BF9C81AB6B90D00D089AD /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = F04BF9C71AB6B90D00D089AD /* Device.m */; };
+		F0BF0FB01AB6C27D009B5357 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BF0FAF1AB6C27D009B5357 /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +47,16 @@
 		CEB5279D1AAE7EEC00069E44 /* SmartRouterIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartRouterIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEB527A21AAE7EED00069E44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEB527A31AAE7EED00069E44 /* SmartRouterIOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SmartRouterIOSTests.m; sourceTree = "<group>"; };
+		F04BF85B1AB6A49E00D089AD /* DeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTableViewCell.h; sourceTree = "<group>"; };
+		F04BF85C1AB6A49E00D089AD /* DeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTableViewCell.m; sourceTree = "<group>"; };
+		F04BF8601AB6A88200D089AD /* DeviceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
+		F04BF9C11AB6B21400D089AD /* light_flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_flash.png; path = ../../smartRouter/app/src/main/res/drawable/light_flash.png; sourceTree = "<group>"; };
+		F04BF9C21AB6B21400D089AD /* light_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_off.png; path = ../../smartRouter/app/src/main/res/drawable/light_off.png; sourceTree = "<group>"; };
+		F04BF9C31AB6B21400D089AD /* light_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_on.png; path = ../../smartRouter/app/src/main/res/drawable/light_on.png; sourceTree = "<group>"; };
+		F04BF9C71AB6B90D00D089AD /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+		F04BF9C91AB6B92200D089AD /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		F0BF0FAF1AB6C27D009B5357 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		F0BF0FB11AB6C28B009B5357 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,14 +98,24 @@
 		CEB527861AAE7EEC00069E44 /* SmartRouterIOS */ = {
 			isa = PBXGroup;
 			children = (
+				F04BF9C11AB6B21400D089AD /* light_flash.png */,
+				F04BF9C21AB6B21400D089AD /* light_off.png */,
+				F04BF9C31AB6B21400D089AD /* light_on.png */,
 				CEB5278B1AAE7EEC00069E44 /* AppDelegate.h */,
 				CEB5278C1AAE7EEC00069E44 /* AppDelegate.m */,
 				CEB5278E1AAE7EEC00069E44 /* ViewController.h */,
 				CEB5278F1AAE7EEC00069E44 /* ViewController.m */,
 				CEB527911AAE7EEC00069E44 /* Main.storyboard */,
+				F04BF85B1AB6A49E00D089AD /* DeviceTableViewCell.h */,
+				F04BF85C1AB6A49E00D089AD /* DeviceTableViewCell.m */,
 				CEB527941AAE7EEC00069E44 /* Images.xcassets */,
 				CEB527961AAE7EEC00069E44 /* LaunchScreen.xib */,
 				CEB527871AAE7EEC00069E44 /* Supporting Files */,
+				F04BF8601AB6A88200D089AD /* DeviceCell.xib */,
+				F04BF9C71AB6B90D00D089AD /* Device.m */,
+				F04BF9C91AB6B92200D089AD /* Device.h */,
+				F0BF0FAF1AB6C27D009B5357 /* Utils.m */,
+				F0BF0FB11AB6C28B009B5357 /* Utils.h */,
 			);
 			path = SmartRouterIOS;
 			sourceTree = "<group>";
@@ -199,9 +226,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04BF9C51AB6B21400D089AD /* light_off.png in Resources */,
 				CEB527931AAE7EEC00069E44 /* Main.storyboard in Resources */,
 				CEB527981AAE7EEC00069E44 /* LaunchScreen.xib in Resources */,
 				CEB527951AAE7EEC00069E44 /* Images.xcassets in Resources */,
+				F04BF9C41AB6B21400D089AD /* light_flash.png in Resources */,
+				F04BF8611AB6A88200D089AD /* DeviceCell.xib in Resources */,
+				F04BF9C61AB6B21400D089AD /* light_on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +253,9 @@
 				CEB527901AAE7EEC00069E44 /* ViewController.m in Sources */,
 				CEB5278D1AAE7EEC00069E44 /* AppDelegate.m in Sources */,
 				CEB5278A1AAE7EEC00069E44 /* main.m in Sources */,
+				F0BF0FB01AB6C27D009B5357 /* Utils.m in Sources */,
+				F04BF9C81AB6B90D00D089AD /* Device.m in Sources */,
+				F04BF85D1AB6A49E00D089AD /* DeviceTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,7 +379,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				INFOPLIST_FILE = SmartRouterIOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -358,7 +392,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				INFOPLIST_FILE = SmartRouterIOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

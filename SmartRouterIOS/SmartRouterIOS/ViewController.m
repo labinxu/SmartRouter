@@ -11,26 +11,33 @@
 #import <netinet/in.h>
 #import <arpa/inet.h>
 #import <unistd.h>
+
+#import "DeviceTableViewCell.h"
+#import "Device.h"
 const CFIndex kBufferSize = 20;
 
 @interface ViewController ()
 {
     CFSocketRef _socket;
     NSMutableData *_receivedData;
+    NSMutableDictionary *_indexAndDevice;
     int port;
 }
 
 @end
 
 @implementation ViewController
+@synthesize devices;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.hostAddrTextField.placeholder = @"请输入路由IP 默认 192.168.1.1";
-    //self.portTextField.placeholder = @"8120";
     self.portTextField.text = @"8120";
     self.hostAddrTextField.text=@"127.0.0.1";
+    self.devices = [[NSMutableDictionary alloc] init];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,7 +45,36 @@ const CFIndex kBufferSize = 20;
    
     // Dispose of any resources that can be recreated.
 }
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    self.devices = nil;
+}
 
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.devices count];
+}
+
+- (UITableViewCell *)tableView: (UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellTableIdentifier = @"DeviceCellIdentifier";
+    static BOOL nibsRegistered = NO;
+    if (!nibsRegistered) {
+        UINib *nib = [UINib nibWithNibName:@"DeviceTableViewCell" bundle:nil];
+        [tableView registerNib:nib forCellReuseIdentifier:cellTableIdentifier];
+        nibsRegistered = YES;
+    }
+    
+    DeviceTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:cellTableIdentifier];
+    NSUInteger row =[indexPath row];
+    NSString *key = [_indexAndDevice objectForKey:[NSString stringWithFormat:@"%d", (NSInteger)row]];
+    Device *d = [self.devices objectForKey:key];
+
+    NSLog(@"%@",[d getDescribe]);
+    return cell;
+    //cell.deviceDescribe =
+}
 - (void) didReceiveData:(NSData *)data
 {
     if (_receivedData==nil) {
@@ -46,7 +82,11 @@ const CFIndex kBufferSize = 20;
     }
     [_receivedData appendData:data];
     
-    
+    Byte *byte=(Byte*)[data bytes];
+    if (byte[0]==0x00 && byte[1]==0x01)
+    {
+        NSLog(@"Received a light");
+    }
     // Update UI
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         NSString *resultString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -54,33 +94,27 @@ const CFIndex kBufferSize = 20;
     }];
 
 }
-void socketCallback(CFReadStreamRef stream , CFStreamEventType event, void* myPtr)
-{
-    NSLog(@">> socketCallback in thread %@",[NSThread currentThread]);
-    
-    ViewController *controller = (__bridge ViewController*)myPtr;
-    switch (event) {
-        case kCFStreamEventHasBytesAvailable:
-        {
-            while (CFReadStreamHasBytesAvailable(stream)) {
-                UInt8 buffer[kBufferSize];
-                int numberRead = CFReadStreamRead(stream, buffer, kBufferSize);
-                [controller didReceiveData:[NSData dataWithBytes:buffer length:numberRead]];
-            }
-        }
-        break;
-        case kCFStreamEventEndEncountered:
-            default:
-            break;
-    }
-}
 - (void) readStream
 {
-    char buffer[20];
+    Byte buffer[17];
     //NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     while (recv(CFSocketGetNative(_socket), buffer, sizeof(buffer), 0)) {
-        NSLog(@"%@",[NSString stringWithUTF8String:buffer]);
+            //NSLog(@"%@",[NSString stringWithUTF8String:buffer]);
+        
+        if (buffer[0]==0x00 && buffer[1]==0x01) {
+            NSLog(@"Received a light");
+            Light *light = [[Light alloc] initWithData: buffer :17];
+            NSLog(@"%d", (int)[light getIndex]);
+
+            NSString *keystr = [[NSString alloc] initWithFormat:@"%d%d", [light getType],[light getIndex]];
+            //[self devices]
+            [self.devices setValue:light forKey:keystr];
+            NSString *strIndex = [NSString stringWithFormat:@"%u", [_indexAndDevice count]];
+            [_indexAndDevice setValue:strIndex forKey:keystr];
+
+        }
     }
+    NSLog(@"EndReadStream");
     
 }
 
@@ -108,14 +142,9 @@ void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
     
 }
 - (IBAction)onClicked:(id)sender {
-   /* NSLog(@"Host addr %@, port %d", self.hostAddrTextField.text,20);
-    NSString *host = self.hostAddrTextField.text;
-    NSString *port = self.portTextField.text;
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@:%@", host,port]];
-    NSThread *backgroundThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadDataFromServer:) object:url];
     
-    [backgroundThread start];*/
-    
+    _indexAndDevice = nil;
+    _indexAndDevice = [[NSMutableDictionary alloc] init];
     CFSocketContext socketContext =
     {
         0,(__bridge void *)(self), NULL, NULL, NULL
@@ -125,7 +154,7 @@ void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
         [self networkFailedWithErrorMessage:@"connect failed"];
         return;
     }
-    
+
     struct sockaddr_in addr4;
     memset(&addr4, 0, sizeof(addr4));
     addr4.sin_len = sizeof(addr4);
@@ -144,46 +173,6 @@ void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
     CFRelease(cRunRef);
 }
 
-- (void)loadDataFromServer:(NSURL *)url
-{
-    NSString *host = [url host];
-    NSInteger port = [[url port] integerValue];
-    
-    CFStreamClientContext ctx ={0, (__bridge void*)(self), NULL, NULL, NULL};
-    
-    CFOptionFlags registeredEvents = (kCFStreamEventHasBytesAvailable|kCFStreamEventEndEncountered|kCFStreamEventErrorOccurred);
-
-    CFReadStreamRef readStream;
-    CFWriteStreamRef writeStream;
-    CFStreamCreatePairWithSocketToHost(kCFAllocatorDefault, (__bridge CFStringRef)host, (UInt32)port, &readStream, &writeStream);
-    //int socketFileDescriptor = socket(AF_INET, SOCKET_STREAM, 0);
-    //Schedule the stream on the run loop to enable callbacks
-    if (CFReadStreamSetClient(readStream, registeredEvents, socketCallback, &ctx)) {
-        CFReadStreamScheduleWithRunLoop(readStream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-    }
-    else{
-        NSLog(@"RUN error for cfreadstreamsetclient");
-        return;
-    }
-    
-    // open stream for reading
-    if (CFReadStreamOpen(readStream) == NO) {
-        [self networkFailedWithErrorMessage:@"Failed to open read stream"];
-        return;
-    }
-    
-    //CFError
-    CFErrorRef error = CFReadStreamCopyError(readStream);
-    if(error != NULL)
-    {
-        [self networkFailedWithErrorMessage:@"Failed to connect server"];
-        return;
-    }
-    
-    NSLog(@"Successfully connect to %@", url);
-    CFRunLoopRun();
-    
-}
 
 - (void) networkFailedWithErrorMessage:(NSString *)errormessage
 {

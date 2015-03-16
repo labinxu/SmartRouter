@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
 @property (weak, nonatomic) IBOutlet UITextField *hostAddrTextField;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
+@property (strong, nonatomic) NSMutableDictionary* devices;
+
 - (IBAction)onClicked:(id)sender;
-- (void) loadDataFromServer:(NSURL*)url;
 - (void) networkFailedWithErrorMessage:(NSString*)errormessage;
 - (void) didReceiveData:(NSData*) data;
 - (void) readStream;
