@@ -61,7 +61,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="16" y="94" width="338" height="341"/>
+                                    <rect key="frame" x="11" y="98" width="338" height="341"/>
                                 </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="Vkk-Ho-6p1"/>
@@ -91,6 +91,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="devicesListView" destination="mmy-e5-EVL" id="tP9-Si-Cbg"/>
                         <outlet property="hostAddrTextField" destination="efM-Ms-7ps" id="KWy-vs-dDY"/>
                         <outlet property="portTextField" destination="Ash-V7-Jym" id="Xg7-ix-hCT"/>
                         <outlet property="textView" destination="34a-9K-WEJ" id="Odo-Da-eHt"/>

@@ -37,6 +37,7 @@
 }
 - (NSString*) getDescribe
 {
+    NSLog(@"parent getDescribe");
     return nil;
 }
 - (Device*) initWithData:(Byte *)data :(int)lenght
@@ -57,6 +58,8 @@
 
 -(NSString*) getDescribe
 {
-    return [[NSString alloc] initWithFormat:@"Light %d", [self getIndex] ];
+    NSString *describe = [[NSString alloc] initWithFormat:@"Light %d", [self getIndex]];
+    NSLog(@"%@", describe);
+    return describe;
 }
 @end

@@ -19,9 +19,12 @@ const CFIndex kBufferSize = 20;
 @interface ViewController ()
 {
     CFSocketRef _socket;
-    NSMutableData *_receivedData;
+ 
     NSMutableDictionary *_indexAndDevice;
-    int port;
+ 
+    UIImage *light_on_img;
+    UIImage *light_off_img;
+    UIImage *light_flash_img;
 }
 
 @end
@@ -36,8 +39,10 @@ const CFIndex kBufferSize = 20;
     self.hostAddrTextField.placeholder = @"请输入路由IP 默认 192.168.1.1";
     self.portTextField.text = @"8120";
     self.hostAddrTextField.text=@"127.0.0.1";
+    //self.devices = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"11",@"aa", nil];
     self.devices = [[NSMutableDictionary alloc] init];
 
+    light_on_img = [[UIImage alloc] initWithContentsOfFile:@"light_on.png"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,38 +66,23 @@ const CFIndex kBufferSize = 20;
     static NSString *cellTableIdentifier = @"DeviceCellIdentifier";
     static BOOL nibsRegistered = NO;
     if (!nibsRegistered) {
-        UINib *nib = [UINib nibWithNibName:@"DeviceTableViewCell" bundle:nil];
+        UINib *nib = [UINib nibWithNibName:@"DeviceCell" bundle:nil];
         [tableView registerNib:nib forCellReuseIdentifier:cellTableIdentifier];
         nibsRegistered = YES;
     }
-    
+
     DeviceTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:cellTableIdentifier];
+    if (cell==nil) {
+        cell = [[DeviceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellTableIdentifier];
+    }
     NSUInteger row =[indexPath row];
     NSString *key = [_indexAndDevice objectForKey:[NSString stringWithFormat:@"%d", (NSInteger)row]];
     Device *d = [self.devices objectForKey:key];
-
-    NSLog(@"%@",[d getDescribe]);
+    cell.deviceDescribe.text = [d getDescribe];
+    //[cell.deviceStatusBt setBackgroundImage:light_on_img forState:UIControlStateNormal];
+    [cell.deviceStatusBt setTitle:@"Open" forState:UIControlStateNormal];
     return cell;
     //cell.deviceDescribe =
-}
-- (void) didReceiveData:(NSData *)data
-{
-    if (_receivedData==nil) {
-        _receivedData = [[NSMutableData alloc] init];
-    }
-    [_receivedData appendData:data];
-    
-    Byte *byte=(Byte*)[data bytes];
-    if (byte[0]==0x00 && byte[1]==0x01)
-    {
-        NSLog(@"Received a light");
-    }
-    // Update UI
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        NSString *resultString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        self.textView.text = resultString;
-    }];
-
 }
 - (void) readStream
 {
@@ -110,8 +100,11 @@ const CFIndex kBufferSize = 20;
             //[self devices]
             [self.devices setValue:light forKey:keystr];
             NSString *strIndex = [NSString stringWithFormat:@"%u", [_indexAndDevice count]];
-            [_indexAndDevice setValue:strIndex forKey:keystr];
-
+            [_indexAndDevice setValue:keystr forKey:strIndex];
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                //sel.f
+                [self.devicesListView reloadData];
+            }];
         }
     }
     NSLog(@"EndReadStream");
@@ -137,12 +130,12 @@ void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
         return;
     }
     ViewController *controller = (__bridge ViewController*)info;
-    
+
     [controller performSelectorInBackground:@selector(readStream) withObject:nil];
-    
+
 }
 - (IBAction)onClicked:(id)sender {
-    
+
     _indexAndDevice = nil;
     _indexAndDevice = [[NSMutableDictionary alloc] init];
     CFSocketContext socketContext =
@@ -161,15 +154,14 @@ void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
     addr4.sin_family = AF_INET;
     addr4.sin_port = htons(8120);
     addr4.sin_addr.s_addr = inet_addr([self.hostAddrTextField.text UTF8String]);
-    
+
     CFDataRef address = CFDataCreate(kCFAllocatorDefault, (UInt8 *)&addr4, sizeof(addr4));
     CFSocketConnectToAddress(_socket, address, -1);//timeout negative means do not try again
-    
-    
+
     CFRunLoopRef cRunRef = CFRunLoopGetCurrent();
     CFRunLoopSourceRef sourceRef = CFSocketCreateRunLoopSource(kCFAllocatorDefault, _socket, 0);
     CFRunLoopAddSource(cRunRef, sourceRef, kCFRunLoopCommonModes);
-    
+
     CFRelease(cRunRef);
 }
 
