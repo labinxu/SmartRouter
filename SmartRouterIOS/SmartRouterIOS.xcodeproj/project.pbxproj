@@ -16,11 +16,13 @@
 		CEB527A41AAE7EED00069E44 /* SmartRouterIOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB527A31AAE7EED00069E44 /* SmartRouterIOSTests.m */; };
 		F04BF85D1AB6A49E00D089AD /* DeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F04BF85C1AB6A49E00D089AD /* DeviceTableViewCell.m */; };
 		F04BF8611AB6A88200D089AD /* DeviceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F04BF8601AB6A88200D089AD /* DeviceCell.xib */; };
-		F04BF9C41AB6B21400D089AD /* light_flash.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C11AB6B21400D089AD /* light_flash.png */; };
-		F04BF9C51AB6B21400D089AD /* light_off.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C21AB6B21400D089AD /* light_off.png */; };
-		F04BF9C61AB6B21400D089AD /* light_on.png in Resources */ = {isa = PBXBuildFile; fileRef = F04BF9C31AB6B21400D089AD /* light_on.png */; };
 		F04BF9C81AB6B90D00D089AD /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = F04BF9C71AB6B90D00D089AD /* Device.m */; };
 		F0BF0FB01AB6C27D009B5357 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BF0FAF1AB6C27D009B5357 /* Utils.m */; };
+		F0CF27C01AB913E8006F9155 /* light_on.png in Resources */ = {isa = PBXBuildFile; fileRef = F0CF27BF1AB913E8006F9155 /* light_on.png */; };
+		F0CF27C21AB91C66006F9155 /* light_off.png in Resources */ = {isa = PBXBuildFile; fileRef = F0CF27C11AB91C66006F9155 /* light_off.png */; };
+		F0CF27C41AB91C75006F9155 /* light_flash.png in Resources */ = {isa = PBXBuildFile; fileRef = F0CF27C31AB91C75006F9155 /* light_flash.png */; };
+		F0CF27C71AB91CE7006F9155 /* fan_off.png in Resources */ = {isa = PBXBuildFile; fileRef = F0CF27C51AB91CE7006F9155 /* fan_off.png */; };
+		F0CF27C81AB91CE7006F9155 /* fan_run.png in Resources */ = {isa = PBXBuildFile; fileRef = F0CF27C61AB91CE7006F9155 /* fan_run.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,13 +52,15 @@
 		F04BF85B1AB6A49E00D089AD /* DeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTableViewCell.h; sourceTree = "<group>"; };
 		F04BF85C1AB6A49E00D089AD /* DeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTableViewCell.m; sourceTree = "<group>"; };
 		F04BF8601AB6A88200D089AD /* DeviceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceCell.xib; sourceTree = "<group>"; };
-		F04BF9C11AB6B21400D089AD /* light_flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_flash.png; path = ../../smartRouter/app/src/main/res/drawable/light_flash.png; sourceTree = "<group>"; };
-		F04BF9C21AB6B21400D089AD /* light_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_off.png; path = ../../smartRouter/app/src/main/res/drawable/light_off.png; sourceTree = "<group>"; };
-		F04BF9C31AB6B21400D089AD /* light_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = light_on.png; path = ../../smartRouter/app/src/main/res/drawable/light_on.png; sourceTree = "<group>"; };
 		F04BF9C71AB6B90D00D089AD /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		F04BF9C91AB6B92200D089AD /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		F0BF0FAF1AB6C27D009B5357 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		F0BF0FB11AB6C28B009B5357 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		F0CF27BF1AB913E8006F9155 /* light_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_on.png; sourceTree = "<group>"; };
+		F0CF27C11AB91C66006F9155 /* light_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_off.png; sourceTree = "<group>"; };
+		F0CF27C31AB91C75006F9155 /* light_flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light_flash.png; sourceTree = "<group>"; };
+		F0CF27C51AB91CE7006F9155 /* fan_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fan_off.png; sourceTree = "<group>"; };
+		F0CF27C61AB91CE7006F9155 /* fan_run.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fan_run.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +102,11 @@
 		CEB527861AAE7EEC00069E44 /* SmartRouterIOS */ = {
 			isa = PBXGroup;
 			children = (
-				F04BF9C11AB6B21400D089AD /* light_flash.png */,
-				F04BF9C21AB6B21400D089AD /* light_off.png */,
-				F04BF9C31AB6B21400D089AD /* light_on.png */,
+				F0CF27C51AB91CE7006F9155 /* fan_off.png */,
+				F0CF27C61AB91CE7006F9155 /* fan_run.png */,
+				F0CF27C31AB91C75006F9155 /* light_flash.png */,
+				F0CF27C11AB91C66006F9155 /* light_off.png */,
+				F0CF27BF1AB913E8006F9155 /* light_on.png */,
 				CEB5278B1AAE7EEC00069E44 /* AppDelegate.h */,
 				CEB5278C1AAE7EEC00069E44 /* AppDelegate.m */,
 				CEB5278E1AAE7EEC00069E44 /* ViewController.h */,
@@ -226,13 +232,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F04BF9C51AB6B21400D089AD /* light_off.png in Resources */,
+				F0CF27C21AB91C66006F9155 /* light_off.png in Resources */,
+				F0CF27C41AB91C75006F9155 /* light_flash.png in Resources */,
 				CEB527931AAE7EEC00069E44 /* Main.storyboard in Resources */,
 				CEB527981AAE7EEC00069E44 /* LaunchScreen.xib in Resources */,
+				F0CF27C01AB913E8006F9155 /* light_on.png in Resources */,
+				F0CF27C71AB91CE7006F9155 /* fan_off.png in Resources */,
 				CEB527951AAE7EEC00069E44 /* Images.xcassets in Resources */,
-				F04BF9C41AB6B21400D089AD /* light_flash.png in Resources */,
+				F0CF27C81AB91CE7006F9155 /* fan_run.png in Resources */,
 				F04BF8611AB6A88200D089AD /* DeviceCell.xib in Resources */,
-				F04BF9C61AB6B21400D089AD /* light_on.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

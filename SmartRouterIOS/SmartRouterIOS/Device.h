@@ -15,6 +15,15 @@ typedef enum _DEVICE_TYPE
     kEnFan,
     
 } DeviceType;
+
+typedef enum _DEVICE_STATE
+{
+    kEnUnkown =0,
+    kEnOn,
+    kEnOff,
+    kEnFlash
+} DeviceState;
+
 @interface Device : NSObject
 {
     Byte binaryData[17];
@@ -25,12 +34,21 @@ typedef enum _DEVICE_TYPE
 -(DeviceType) getType;
 -(int) getIndex;
 -(NSString*) getDescribe;
+-(DeviceState) getState;
+-(int) getParam1;
+-(int) getParam2;
+-(int) getFunctionParam;
+-(Byte*) resetOrientation;
+-(void) switchState;
+-(void) turnOff;
+-(void) turnOn;
 @end
 
 
 //////////////////////////////////
 
 @interface Light : Device
-
+@end
+@interface Fan : Device
 @end
 #endif

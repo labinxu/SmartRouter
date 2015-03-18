@@ -13,12 +13,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *hostAddrTextField;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UITableView *devicesListView;
+@property (weak, nonatomic) IBOutlet UIButton *cnnbt;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableDictionary* devices;
 
 - (IBAction)onClicked:(id)sender;
 - (void) networkFailedWithErrorMessage:(NSString*)errormessage;
 - (void) readStream;
-- (void) sendMessage;
+- (void) sendMessage:(Byte*)data :(int)length;
 @end
 

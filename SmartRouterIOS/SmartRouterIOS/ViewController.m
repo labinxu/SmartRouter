@@ -25,6 +25,8 @@ const CFIndex kBufferSize = 20;
     UIImage *light_on_img;
     UIImage *light_off_img;
     UIImage *light_flash_img;
+    UIImage *fan_on;
+    UIImage *fan_off;
 }
 
 @end
@@ -42,7 +44,14 @@ const CFIndex kBufferSize = 20;
     //self.devices = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"11",@"aa", nil];
     self.devices = [[NSMutableDictionary alloc] init];
 
-    light_on_img = [[UIImage alloc] initWithContentsOfFile:@"light_on.png"];
+    light_on_img = [UIImage imageNamed:@"light_on.png"];
+    light_off_img = [UIImage imageNamed:@"light_off.png"];
+    light_flash_img = [UIImage imageNamed:@"light_flash.png"];
+    
+    fan_off = [UIImage imageNamed:@"fan_off.png"];
+    fan_on = [UIImage imageNamed:@"fan_run.png"];
+    //[self.cnnbt setBackgroundImage:light_on_img forState:UIControlStateNormal];
+    self.tableView.rowHeight = 81;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,52 +83,77 @@ const CFIndex kBufferSize = 20;
     DeviceTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:cellTableIdentifier];
     if (cell==nil) {
         cell = [[DeviceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellTableIdentifier];
+        
     }
     NSUInteger row =[indexPath row];
     NSString *key = [_indexAndDevice objectForKey:[NSString stringWithFormat:@"%d", (NSInteger)row]];
     Device *d = [self.devices objectForKey:key];
     cell.deviceDescribe.text = [d getDescribe];
-    //[cell.deviceStatusBt setBackgroundImage:light_on_img forState:UIControlStateNormal];
-    [cell.deviceStatusBt setTitle:@"Open" forState:UIControlStateNormal];
+    int function = [d getFunctionParam];
+    DeviceType dvType = [d getType];
+    cell.device = d;
+    cell.controller = self;
+    if (dvType == kEnLight) {
+        if (function==1) {
+            [cell.deviceStatusBt setBackgroundImage:light_on_img forState:UIControlStateNormal];
+        }
+        else if (function==2)
+        {
+            [cell.deviceStatusBt setBackgroundImage:light_off_img forState:UIControlStateNormal];
+        }
+        else
+        {
+            [cell.deviceStatusBt setBackgroundImage:light_flash_img forState:UIControlStateNormal];
+        }
+    }
+    else if (dvType == kEnFan)
+    {
+        if (function == 1) {
+            [cell.deviceStatusBt setBackgroundImage:fan_on forState:UIControlStateNormal];
+        }
+        else if (function == 2)
+        {
+            [cell.deviceStatusBt setBackgroundImage:fan_off forState:UIControlStateNormal];
+        }
+    }
     return cell;
-    //cell.deviceDescribe =
 }
+
 - (void) readStream
 {
     Byte buffer[17];
     //NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     while (recv(CFSocketGetNative(_socket), buffer, sizeof(buffer), 0)) {
             //NSLog(@"%@",[NSString stringWithUTF8String:buffer]);
-        
+        Device *device = nil;
         if (buffer[0]==0x00 && buffer[1]==0x01) {
             NSLog(@"Received a light");
-            Light *light = [[Light alloc] initWithData: buffer :17];
-            NSLog(@"%d", (int)[light getIndex]);
-
-            NSString *keystr = [[NSString alloc] initWithFormat:@"%d%d", [light getType],[light getIndex]];
+            device = [[Light alloc] initWithData: buffer :17];
+            
+        }
+        else if(buffer[0]==0x00 && buffer[1] == 0x20)
+        {
+            NSLog(@"received a fan");
+            device = [[Fan alloc] initWithData:buffer :17];
+        }
+        NSString *keystr = [[NSString alloc] initWithFormat:@"%d%d", [device getType],[device getIndex]];
             //[self devices]
-            [self.devices setValue:light forKey:keystr];
-            NSString *strIndex = [NSString stringWithFormat:@"%u", [_indexAndDevice count]];
-            [_indexAndDevice setValue:keystr forKey:strIndex];
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self.devices setValue:device forKey:keystr];
+        NSString *strIndex = [NSString stringWithFormat:@"%d", [_indexAndDevice count]];
+        [_indexAndDevice setValue:keystr forKey:strIndex];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                 //sel.f
                 [self.devicesListView reloadData];
-            }];
-        }
+        }];
+
     }
     NSLog(@"EndReadStream");
     
 }
 
-- (void)sendMessage{
-    char buffer[20];
-    memset(buffer, 0, sizeof(buffer));
-    buffer[0]=0x00;
-    buffer[1]=0x01;
-    buffer[2]=0x00;
-    buffer[3]=0x20;
-    send(CFSocketGetNative(_socket), buffer, sizeof(buffer), 0);
-    
+- (void)sendMessage:(Byte*)data :(int) lenght{
+    send(CFSocketGetNative(_socket), data, lenght, 0);
+
 }
 void TcpSocketCallback(CFSocketRef socket, CFSocketCallBackType type,
                        CFDataRef address, const void *data, void *info)
