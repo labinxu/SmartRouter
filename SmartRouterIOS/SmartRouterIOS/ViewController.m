@@ -14,6 +14,7 @@
 
 #import "DeviceTableViewCell.h"
 #import "Device.h"
+#import "DeviceDetailsView.h"
 const CFIndex kBufferSize = 20;
 
 @interface ViewController ()
@@ -64,10 +65,33 @@ const CFIndex kBufferSize = 20;
     [super viewDidUnload];
     self.devices = nil;
 }
-
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"Prepare for segue %@" ,[sender getDescribe]);
+    DeviceDetailsView *controller = segue.destinationViewController;
+    controller.device = sender;
+    //if ([controller respondsToSelector:@selector(setData:)]) {
+            //[controller setValue:sender forKey:@"device"];
+//    }
+    
+    //NSDictionary *dicts = [NSDictionary dictionaryWithObjectsAndKeys:sender, @"device",nil];
+  /*  NSNotification *notification = [NSNotification notificationWithName:@"myNotification" object:sender];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    */
+}
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.devices count];
+}
+
+- (void) tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSUInteger row =[indexPath row];
+    NSString *key = [_indexAndDevice objectForKey:[NSString stringWithFormat:@"%d", (NSInteger)row]];
+    Device *d = [self.devices objectForKey:key];
+    NSLog(@"selec %@", [d getDescribe]);
+    [self performSegueWithIdentifier:@"second" sender:d];
 }
 
 - (UITableViewCell *)tableView: (UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
